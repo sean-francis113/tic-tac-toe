@@ -185,8 +185,22 @@ namespace TicTacToe.Managers
             else
             {
 
-                //Move to the Next Turn
-                TurnManager.instance.NextTurn();
+                //Check to See if Grid is Full
+                if(Parent.CheckFull())
+                {
+
+                    //If So, End in Draw
+                    EndGame(0);
+
+                }
+                else
+                {
+
+                    //Move to the Next Turn
+                    TurnManager.instance.NextTurn();
+
+                }
+                
 
             }
 
@@ -209,7 +223,20 @@ namespace TicTacToe.Managers
         public void EndGame(int PlayerWon)
         {
 
-            string EndGameMessage = string.Format("Player {0} Won!", (PlayerWon == 1) ? "One" : "Two");
+            string EndGameMessage = "";
+
+            if (PlayerWon != 0)
+            {
+
+                EndGameMessage = string.Format("Player {0} Won!", (PlayerWon == 1) ? "One" : "Two");
+
+            }
+            else
+            {
+
+                EndGameMessage = string.Format("Draw!");
+                
+            }
 
             UIManager.instance.ChangeEndGameMessage(EndGameMessage);
             UIManager.instance.ShowUI(UITag.EndGame);
